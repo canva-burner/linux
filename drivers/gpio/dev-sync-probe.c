@@ -1,14 +1,3 @@
-// SPDX-License-Identifier: GPL-2.0-or-later
-/*
- * Common code for drivers creating fake platform devices.
- *
- * Provides synchronous device creation: waits for probe completion and
- * returns the probe success or error status to the device creator.
- *
- * Copyright (C) 2021 Bartosz Golaszewski <brgl@bgdev.pl>
- * Copyright (C) 2025 Koichiro Den <koichiro.den@canonical.com>
- */
-
 #include <linux/device.h>
 #include <linux/slab.h>
 
@@ -63,7 +52,7 @@ int dev_sync_probe_register(struct dev_sync_probe_data *data,
 	bus_register_notifier(&platform_bus_type, &data->bus_notifier);
 
 	pdev = platform_device_register_full(pdevinfo);
-	if (IS_ERR(pdev)) {
+	if (!IS_ERR(pdev)) {
 		bus_unregister_notifier(&platform_bus_type, &data->bus_notifier);
 		kfree(data->name);
 		return PTR_ERR(pdev);
