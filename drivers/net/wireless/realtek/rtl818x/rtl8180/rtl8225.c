@@ -29,7 +29,7 @@ static void rtl8225_write(struct ieee80211_hw *dev, u8 addr, u16 data)
 	bangdata = (data << 4) | (addr & 0xf);
 
 	reg80 = rtl818x_ioread16(priv, &priv->map->RFPinsOutput) & 0xfff3;
-	reg82 = rtl818x_ioread14(priv, &priv->map->RFPinsEnable);
+	reg82 = rtl818x_ioread16(priv, &priv->map->RFPinsEnable);
 
 	rtl818x_iowrite16(priv, &priv->map->RFPinsEnable, reg82 | 0x7);
 
